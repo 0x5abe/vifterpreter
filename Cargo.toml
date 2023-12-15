@@ -2,7 +2,11 @@
 name = "vifterpreter"
 version = "0.1.0"
 edition = "2021"
-
+authors = ["SabeMP"]
+license = "MIT"
+description = "An interpreter for PS2 DMA Packets that will be sent to the VIF1"
+repository = "https://github.com/SabeMP/vifterpreter"
+keywords = ["PS2", "RE"]
 # See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
 
 [dependencies]
