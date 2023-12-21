@@ -1,61 +1,66 @@
 use bilge::prelude::*;
 use binrw::{args, BinRead, BinResult, Endian};
 use std::io::{Read, Seek};
+use strum_macros::EnumDiscriminants;
 
-#[derive(Debug)]
+#[derive(Debug, EnumDiscriminants)]
+#[repr(u8)]
 #[allow(non_camel_case_types)]
+#[strum_discriminants(attributes(allow(non_camel_case_types), bitsize(8)))]
+#[strum_discriminants(derive(TryFromBits))]
+#[strum_discriminants(name(VifCodeCmd))]
 pub enum VifCode {
-    Nop,
+    Nop = 0x0,
     Stcycl {
         cl: u8,
         wl: u8,
-    },
+    } = 0x1,
     Stmod {
         mode: u2,
-    },
-    Flush,
-    Mscnt,
+    } = 0x5,
+    Flush = 0x11,
+    Mscnt = 0x17,
     Strow {
         r0: u32,
         r1: u32,
         r2: u32,
         r3: u32,
-    },
+    } = 0x30,
     Unpack_S_32 {
         address: u10,
         zero_extension: bool,
         add_tops: bool,
         num: usize,
         data: Vec<u32>,
-    },
+    } = 0x60,
     Unpack_V2_16 {
         address: u10,
         zero_extension: bool,
         add_tops: bool,
         num: usize,
         data: Vec<u16>,
-    },
+    } = 0x65,
     Unpack_V4_32 {
         address: u10,
         zero_extension: bool,
         add_tops: bool,
         num: usize,
         data: Vec<u32>,
-    },
+    } = 0x6c,
     Unpack_V4_16 {
         address: u10,
         zero_extension: bool,
         add_tops: bool,
         num: usize,
         data: Vec<u16>,
-    },
+    } = 0x6d,
     Unpack_V4_8 {
         address: u10,
         zero_extension: bool,
         add_tops: bool,
         num: usize,
         data: Vec<u8>,
-    },
+    } = 0x6e,
 }
 
 impl BinRead for VifCode {
@@ -217,23 +222,6 @@ impl BinRead for VifCode {
 
         Ok(vif_code)
     }
-}
-
-#[bitsize(8)]
-#[derive(TryFromBits)]
-#[allow(non_camel_case_types)]
-enum VifCodeCmd {
-    Nop = 0x0,
-    Stcycl = 0x1,
-    Stmod = 0x5,
-    Flush = 0x11,
-    Mscnt = 0x17,
-    Strow = 0x30,
-    Unpack_S_32 = 0x60,
-    Unpack_V2_16 = 0x65,
-    Unpack_V4_32 = 0x6c,
-    Unpack_V4_16 = 0x6d,
-    Unpack_V4_8 = 0x6e,
 }
 
 #[bitsize(32)]
