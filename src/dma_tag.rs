@@ -47,10 +47,6 @@ fn parse_vif_codes(effective_dma_tag: &EffectiveDmaTag) -> BinResult<Vec<VifCode
     let mut vif_codes = Vec::new();
 
     let stream_start = reader.stream_position()?;
-    println!(
-        "End pos: {}",
-        stream_start + 8 + effective_dma_tag.qword_count() as u64 * 16
-    );
 
     while reader.stream_position()? < stream_start + 8 + effective_dma_tag.qword_count() as u64 * 16
     {

@@ -145,6 +145,9 @@ checksum = "7ffc183a10b4478d04cbbbfc96d0873219d962dd5accaff2ffbd4ceb7df837f4"
 name = "strum"
 version = "0.25.0"
 source = "git+https://github.com/SabeMP/strum.git?branch=discriminant-enum-custom-attributes#882df2459ca05fad1ab39bb83edddc2fa06ab8f4"
+dependencies = [
+ "strum_macros",
+]
 
 [[package]]
 name = "strum_macros"
@@ -199,5 +202,4 @@ dependencies = [
  "bilge",
  "binrw",
  "strum",
- "strum_macros",
 ]

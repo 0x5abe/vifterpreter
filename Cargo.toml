@@ -12,5 +12,4 @@ keywords = ["PS2", "RE"]
 [dependencies]
 binrw = "0.13.3"
 bilge = "0.2.0"
-strum = { git = "https://github.com/SabeMP/strum.git", branch = "discriminant-enum-custom-attributes" }
-strum_macros = { git = "https://github.com/SabeMP/strum.git", branch = "discriminant-enum-custom-attributes" }
+strum = { git = "https://github.com/SabeMP/strum.git", branch = "discriminant-enum-custom-attributes", features = ["derive"] }
