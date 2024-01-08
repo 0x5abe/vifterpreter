@@ -1,8 +1,9 @@
 use crate::dma_tag::{DmaTag, DmaTagId};
-use binrw::{args, BinRead, BinResult, Endian};
+use binrw::{args, BinRead, BinWrite, BinResult, Endian};
 use std::io::{Read, Seek};
+use serde::{Deserialize, Serialize};
 
-#[derive(Debug)]
+#[derive(Debug, Serialize, BinWrite, Deserialize)]
 pub struct DmaPacket {
     pub dma_tags: Vec<DmaTag>,
 }

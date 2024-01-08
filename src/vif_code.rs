@@ -1,9 +1,10 @@
 use bilge::prelude::*;
 use binrw::{args, BinRead, BinResult, Endian};
 use std::io::{Read, Seek};
+use serde::{Deserialize, Serialize};
 use strum::EnumDiscriminants;
 
-#[derive(Debug, EnumDiscriminants)]
+#[derive(Debug, EnumDiscriminants, Serialize, Deserialize)]
 #[repr(u8)]
 #[allow(non_camel_case_types)]
 #[strum_discriminants(

@@ -11,5 +11,6 @@ keywords = ["PS2", "RE"]
 
 [dependencies]
 binrw = "0.13.3"
-bilge = "0.2.0"
+bilge = { git = "https://github.com/widberg/bilge.git", features = [ "serde" ] }
+serde = { version = "1.0.194",  features = ["derive"] }
 strum = { git = "https://github.com/SabeMP/strum.git", branch = "discriminant-enum-custom-attributes", features = ["derive"] }

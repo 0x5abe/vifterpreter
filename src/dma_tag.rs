@@ -1,9 +1,10 @@
 use crate::vif_code::VifCode;
 use bilge::prelude::*;
-use binrw::{BinRead, BinResult};
+use binrw::{BinRead, BinResult, BinWrite};
+use serde::{Deserialize, Serialize};
 
 #[bitsize(2)]
-#[derive(FromBits, Debug)]
+#[derive(FromBits, Debug, Serialize, Deserialize)]
 pub enum PriorityControl {
     NoEffect = 0,
     Reserved = 1,
@@ -12,7 +13,7 @@ pub enum PriorityControl {
 }
 
 #[bitsize(3)]
-#[derive(FromBits, Debug)]
+#[derive(FromBits, Debug, Serialize, Deserialize)]
 pub enum DmaTagId {
     Refe = 0,
     Cnt = 1,
@@ -25,7 +26,7 @@ pub enum DmaTagId {
 }
 
 #[bitsize(64)]
-#[derive(BinRead, DebugBits)]
+#[derive(BinRead, DebugBits, SerializeBits, BinWrite, DeserializeBits)]
 pub struct EffectiveDmaTag {
     pub qword_count: u16,
     padding: u10,
@@ -35,10 +36,11 @@ pub struct EffectiveDmaTag {
     address: u32,
 }
 
-#[derive(BinRead, Debug)]
+#[derive(BinRead, Debug, Serialize, BinWrite, Deserialize)]
 pub struct DmaTag {
     pub effective_dma_tag: EffectiveDmaTag,
     #[br(parse_with=parse_vif_codes, args(&effective_dma_tag))]
+    #[bw(write_with=write_vif_codes, args(&effective_dma_tag))]
     pub vif_codes: Vec<VifCode>,
 }
 
@@ -54,4 +56,10 @@ fn parse_vif_codes(effective_dma_tag: &EffectiveDmaTag) -> BinResult<Vec<VifCode
     }
 
     Ok(vif_codes)
+}
+
+#[binrw::writer(writer, endian)]
+#[allow(unused_variables)]
+fn write_vif_codes(data: &Vec<VifCode>, effective_dma_tag: &EffectiveDmaTag) -> BinResult<()> {
+    todo!()
 }
